@@ -67,11 +67,7 @@ fn main() -> ! {
         }
         if n_keys {
             if let Some(key) = touch_handle.read_key_value().unwrap() {
-                esp_println::println!(
-                    "key presses registered: {:}\n key-id: {:?}",
-                    n_keys,
-                    key
-                );
+                esp_println::println!("key presses registered: {:}\n key-id: {:?}", n_keys, key);
             }
         }
     }

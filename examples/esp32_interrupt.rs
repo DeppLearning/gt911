@@ -146,7 +146,6 @@ fn GPIO() {
                 }
             }
             // touch_handle.close();
-
         })
     });
 }

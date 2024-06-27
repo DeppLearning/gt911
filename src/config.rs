@@ -50,9 +50,9 @@ pub const ESP32_S3_BOX_3_DEFAULT_CONFIG: Config = zerocopy::transmute!([
 #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
 pub struct Config {
     version: u8,
-    #[cfg_attr(feature = "defmt",defmt(Debug2Format))]
+    #[cfg_attr(feature = "defmt", defmt(Debug2Format))]
     x_output_max: U16,
-    #[cfg_attr(feature = "defmt",defmt(Debug2Format))]
+    #[cfg_attr(feature = "defmt", defmt(Debug2Format))]
     y_output_max: U16,
     touch_number: u8,
     module_switch_1: u8,
@@ -68,9 +68,9 @@ pub struct Config {
     x_threshold: u8,
     y_threshold: u8,
     #[getset(skip)]
-    #[cfg_attr(feature = "defmt",defmt(Debug2Format))]
+    #[cfg_attr(feature = "defmt", defmt(Debug2Format))]
     _nc0: U16,
-    #[cfg_attr(feature = "defmt",defmt(Debug2Format))]
+    #[cfg_attr(feature = "defmt", defmt(Debug2Format))]
     space: U16,
     mini_filter: u8,
     stretch_r0: u8,
@@ -138,13 +138,13 @@ pub struct Config {
     key_area: u8,
     key_touch_level: u8,
     key_leave_level: u8,
-    #[cfg_attr(feature = "defmt",defmt(Debug2Format))]
+    #[cfg_attr(feature = "defmt", defmt(Debug2Format))]
     key_sens: U16,
     key_restrain: u8,
     key_restrain_time: u8,
     gesture_large_touch: u8,
     #[getset(skip)]
-    #[cfg_attr(feature = "defmt",defmt(Debug2Format))]
+    #[cfg_attr(feature = "defmt", defmt(Debug2Format))]
     _nc6: U16,
     hotknot_noise_map: u8,
     link_threshold: u8,
@@ -160,17 +160,17 @@ pub struct Config {
     combine_dis: u8,
     split_set: u8,
     #[getset(skip)]
-    #[cfg_attr(feature = "defmt",defmt(Debug2Format))]
+    #[cfg_attr(feature = "defmt", defmt(Debug2Format))]
     _nc8: U16,
     /// Sensor channels 0-13
     sensor_channels: [u8; 14],
     #[getset(skip)]
-    #[cfg_attr(feature = "defmt",defmt(Debug2Format))]
+    #[cfg_attr(feature = "defmt", defmt(Debug2Format))]
     _nc9: [U64; 2],
     /// Driver channels 0-25
     driver_channels: [u8; 26],
     #[getset(skip)]
-    #[cfg_attr(feature = "defmt",defmt(Debug2Format))]
+    #[cfg_attr(feature = "defmt", defmt(Debug2Format))]
     _nc10: [U64; 2],
     config_chksum: u8,
     config_fresh: u8,
