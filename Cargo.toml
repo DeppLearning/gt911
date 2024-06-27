@@ -32,7 +32,7 @@ esp-backtrace = { version = "0.12.1", features = ["panic-handler",  "esp32s3", "
 # cortex-m = "*"
 critical-section    = "1.1.2"
 [features]
-default = ["heapless", "esp32s3"]
+default = ["heapless"]
 defmt = ["dep:defmt", "heapless?/defmt-03"]
 heapless = ["dep:heapless"]
 esp32s3 = ["dep:esp-backtrace", "dep:esp32s3-hal", "dep:esp-println"]

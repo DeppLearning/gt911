@@ -26,6 +26,12 @@ The current state is pretty bare-bones. If you are missing a feature, please ope
 - [ ] rotation
 - [ ] more default configurations for popular development boards
   
+## Examples
+
+```bash
+cargo +esp run --example esp32_poll --release --features "esp32s3" --config esp32s3-box-3/config.toml  
+```
+
 ## Supported Development Boards
 
 I only have access to a single device using this controller. Other devices probably will work as well, however, probably require different configuration.
