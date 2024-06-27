@@ -1,0 +1,61 @@
+[package]
+edition = "2021"
+rust-version = "1.58"
+name = "gt911"
+version = "0.1.0"
+authors = ["Andrej Krakau <krakau@filancore.com>"]
+description = "An embedded-hal driver for the GT911 5-point capacitive touchscreen controller"
+readme = "README.md"
+categories = [
+    "embedded",
+    "embedded-hal",
+    "gt911",
+    "no-std",
+]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/depplearning/gt911"
+
+[dependencies.embedded-hal]
+version = "1.0.0"
+
+[dependencies]
+bitfield-struct = { version = "0.8.0", default-features = false }
+defmt = { version = "0.3.8", default-features = false, optional = true }
+heapless = { version = "0.8.0", default-features = false, optional = true }
+getset = { version = "0.1.2", default-features = false}
+zerocopy = { version = "0.7.34", default-features = false, features = ["byteorder", "derive"]}
+
+
+esp-println =  { version = "0.9.0", features = ["esp32s3", "log", "uart"], optional = true}
+esp32s3-hal = { package = "esp-hal", git ="https://github.com/esp-rs/esp-hal", rev = "fb90fe780cd858db68c180f14dd911afb8145633", default-features = false, features = ["esp32s3", "embedded-hal", "log", "debug"], optional = true}
+esp-backtrace = { version = "0.12.1", features = ["panic-handler",  "esp32s3", "println"], optional = true }
+# cortex-m = "*"
+critical-section    = "1.1.2"
+[features]
+default = ["heapless", "esp32s3"]
+defmt = ["dep:defmt", "heapless?/defmt-03"]
+heapless = ["dep:heapless"]
+esp32s3 = ["dep:esp-backtrace", "dep:esp32s3-hal", "dep:esp-println"]
+
+
+# # cargo build/run --release
+# [profile.release]
+# codegen-units = 1
+# debug = 2
+# debug-assertions = false # <-
+# incremental = false
+# lto = 'fat'
+# # strip = true
+# opt-level = 3 # <-
+# overflow-checks = false # <-
+
+
+[profile.release]
+debug = true
+opt-level = "s"
+lto = "off"
+
+[profile.dev]
+debug = true
+opt-level = "s"
+lto = "off"
