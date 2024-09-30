@@ -391,6 +391,16 @@ where
     }
 
     /// Returns `true` if new data is available for reading
+    // TODO this now only seems useful for polling. if used in interrupt, the
+    // interrupt keeps interrupting
+    // TODO try to reset / unlisten from
+    // interrupts? but then how to relisten again. this stuff needs a read_handler
+    // TODO we could get rid of data_available? but it seems useful for polling if
+    // we don't listen to interrupts, then the touch controller seems to drive the
+    // int pin correctly
+    // TODO the problem is that we need to call reset when data_available == true
+    // and buffer_status = 0, even though the spec said we only need to reset on
+    // buffer_status = 1.
     pub fn data_available(&mut self) -> Result<bool, Error<<I2C as ErrorType>::Error>>
     where
         IRQ: InputPin,
@@ -398,10 +408,8 @@ where
         if let Some(pin) = self.int.as_mut() {
             Ok(pin.is_low().map_err(|_| Error::IOError)?)
         } else {
-            Ok(false)
+            Ok(true)
         }
-        // Ok(self.irq.as_mut().map(|pin| pin.is_low().map_err(|_|
-        // Error::IOError))).map_err(|_| Error::IOError)
     }
 
     /// Reads config from device
@@ -427,6 +435,11 @@ where
     }
 
     /// Writes config to the device
+    ///
+    /// The version field of the [Config] needs to be bigger than the device
+    /// config version, otherwise the config will not be updated properly.
+    /// 
+    // TODO check that config has been applied
     pub fn write_config(
         &mut self,
         config: &mut Config,

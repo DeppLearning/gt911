@@ -26,8 +26,8 @@ getset = { version = "0.1.2", default-features = false}
 zerocopy = { version = "0.7.34", default-features = false, features = ["byteorder", "derive"]}
 
 
-esp-println =  { version = "0.9.0", features = ["esp32s3", "log", "uart"], optional = true}
-esp32s3-hal = { package = "esp-hal", git ="https://github.com/esp-rs/esp-hal", rev = "fb90fe780cd858db68c180f14dd911afb8145633", default-features = false, features = ["esp32s3", "embedded-hal", "log", "debug"], optional = true}
+esp-println =  { version = "0.9.1", features = ["esp32s3", "log", "uart"], optional = true}
+esp32s3-hal = { package = "esp-hal", git ="https://github.com/esp-rs/esp-hal", rev = "7f251b457a7ab103a42854bdce12df080e1d18d4", default-features = false, features = ["esp32s3", "embedded-hal", "log", "debug"], optional = true}
 esp-backtrace = { version = "0.12.1", features = ["panic-handler",  "esp32s3", "println"], optional = true }
 # cortex-m = "*"
 critical-section    = "1.1.2"
