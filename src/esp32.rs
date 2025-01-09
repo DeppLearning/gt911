@@ -4,7 +4,6 @@ use esp32s3_hal::gpio::Event;
 use esp32s3_hal::gpio::Flex as Flex_;
 use esp32s3_hal::gpio::Pull;
 use esp32s3_hal::peripheral::Peripheral;
-use esp_backtrace as _;
 
 use crate::FlexPin;
 

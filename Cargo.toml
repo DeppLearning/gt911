@@ -26,16 +26,17 @@ getset = { version = "0.1.2", default-features = false}
 zerocopy = { version = "0.7.34", default-features = false, features = ["byteorder", "derive"]}
 
 
-esp-println =  { version = "0.9.1", features = ["esp32s3", "log", "uart"], optional = true}
 esp32s3-hal = { package = "esp-hal", git ="https://github.com/esp-rs/esp-hal", rev = "7f251b457a7ab103a42854bdce12df080e1d18d4", default-features = false, features = ["esp32s3", "embedded-hal", "log", "debug"], optional = true}
-esp-backtrace = { version = "0.12.1", features = ["panic-handler",  "esp32s3", "println"], optional = true }
 # cortex-m = "*"
 critical-section    = "1.1.2"
+[dev-dependencies]
+esp-backtrace = {  git ="https://github.com/esp-rs/esp-hal", rev = "7f251b457a7ab103a42854bdce12df080e1d18d4", features = ["panic-handler",  "esp32s3", "println"] }
+esp-println =  {  git ="https://github.com/esp-rs/esp-hal", rev = "7f251b457a7ab103a42854bdce12df080e1d18d4", features = ["esp32s3", "log", "uart"] }
 [features]
 default = ["heapless"]
 defmt = ["dep:defmt", "heapless?/defmt-03"]
 heapless = ["dep:heapless"]
-esp32s3 = ["dep:esp-backtrace", "dep:esp32s3-hal", "dep:esp-println"]
+esp32s3 = ["dep:esp32s3-hal"]
 
 
 # # cargo build/run --release
