@@ -1,16 +1,15 @@
 #![no_std]
 #![no_main]
 
-use esp32s3_hal::clock::ClockControl;
 use esp32s3_hal::delay::Delay;
 use esp32s3_hal::entry;
-use esp32s3_hal::gpio::Gpio3;
+use esp32s3_hal::gpio::Input;
 use esp32s3_hal::gpio::Io;
+use esp32s3_hal::gpio::Pull;
 use esp32s3_hal::i2c::I2C;
 use esp32s3_hal::peripherals::Peripherals;
 use esp32s3_hal::prelude::*;
 use esp32s3_hal::rtc_cntl::Rtc;
-use esp32s3_hal::system::SystemControl;
 use esp32s3_hal::timer::timg::TimerGroup;
 use esp_backtrace as _;
 use gt911::esp32::Flex;
@@ -19,20 +18,18 @@ use heapless::Vec;
 
 #[entry]
 fn main() -> ! {
-    let peripherals = Peripherals::take();
-    let system = SystemControl::new(peripherals.SYSTEM);
-    let clocks = ClockControl::boot_defaults(system.clock_control).freeze();
+    let peripherals = esp32s3_hal::init(esp32s3_hal::Config::default());
 
-    let mut delay = Delay::new(&clocks);
+    let mut delay = Delay::new();
     let io = Io::new(peripherals.GPIO, peripherals.IO_MUX);
 
     let sda = io.pins.gpio8;
     let scl = io.pins.gpio18;
 
-    let irq_pin: Option<Flex<'_, Gpio3>> = Some(Flex::new(io.pins.gpio3));
-    let mut rst = Flex::new(io.pins.gpio48);
+    let irq_pin = Some(Flex::new(Input::new(io.pins.gpio3, Pull::Down)));
+    let mut rst = Flex::new(Input::new(io.pins.gpio48, Pull::Down));
 
-    let i2c = I2C::new(peripherals.I2C0, sda, scl, 1u32.kHz(), &clocks, None);
+    let i2c = I2C::new(peripherals.I2C0, sda, scl, 1u32.kHz());
 
     let mut touch = gt911::GT911::new(i2c, irq_pin, &mut rst, &mut delay, Address::One)
         .expect("Initialize the touch device");

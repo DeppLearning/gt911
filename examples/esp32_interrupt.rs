@@ -48,9 +48,7 @@ static TOUCH: Mutex<
 > = Mutex::new(RefCell::new(None));
 #[entry]
 fn main() -> ! {
-    let peripherals = Peripherals::take();
-    let system = SystemControl::new(peripherals.SYSTEM);
-    let clocks = ClockControl::boot_defaults(system.clock_control).freeze();
+    let peripherals = esp_hal::init(esp_hal::Config::default());
 
     // TODO this doesn't seem to be necessary
 
@@ -71,7 +69,7 @@ fn main() -> ! {
 
     // rtc.rwdt.unlisten();
 
-    let mut delay = Delay::new(&clocks);
+    let mut delay = Delay::new();
     let mut io = Io::new(peripherals.GPIO, peripherals.IO_MUX);
 
     io.set_interrupt_handler(GPIO);
@@ -93,8 +91,6 @@ fn main() -> ! {
         // 400u32.kHz(),
         // Interrupt reset only somewhat works with slower bus frequency
         1u32.kHz(),
-        &clocks,
-        None,
     );
 
     let mut touch = gt911::GT911::new(i2c, Some(irq_pin), &mut rst, &mut delay, Address::One)

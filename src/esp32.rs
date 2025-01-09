@@ -1,27 +1,27 @@
 use embedded_hal::digital::InputPin;
 use embedded_hal::digital::OutputPin;
+use esp32s3_hal::gpio::AnyPin;
 use esp32s3_hal::gpio::Event;
 use esp32s3_hal::gpio::Flex as Flex_;
 use esp32s3_hal::gpio::Pull;
 use esp32s3_hal::peripheral::Peripheral;
-use esp_backtrace as _;
 
 use crate::FlexPin;
 
 /// Flexible GPIO pin usable as input and output
-pub struct Flex<'d, P>(Flex_<'d, P>);
+pub struct Flex<'d>(Flex_<'d>);
 
-impl<'d, P: esp32s3_hal::gpio::InputPin + esp32s3_hal::gpio::OutputPin> Flex<'d, P> {
-    pub fn new(pin: impl Peripheral<P = P> + 'd) -> Self {
+impl<'d> Flex<'d> {
+    pub fn new(pin: impl Peripheral<P = AnyPin> + 'd) -> Self {
         Self(Flex_::new(pin))
     }
 }
 
-impl<'d, P> embedded_hal::digital::ErrorType for Flex<'d, P> {
+impl<'d> embedded_hal::digital::ErrorType for Flex<'d> {
     type Error = embedded_hal::digital::ErrorKind;
 }
 
-impl<'d, P: esp32s3_hal::gpio::InputPin + esp32s3_hal::gpio::OutputPin> FlexPin for Flex<'d, P> {
+impl<'d> FlexPin for Flex<'d> {
     fn set_as_input(&mut self) {
         self.0.set_as_input(Pull::None)
     }
@@ -42,7 +42,7 @@ impl<'d, P: esp32s3_hal::gpio::InputPin + esp32s3_hal::gpio::OutputPin> FlexPin 
     }
 }
 
-impl<'d, P: esp32s3_hal::gpio::InputPin + esp32s3_hal::gpio::OutputPin> InputPin for Flex<'d, P> {
+impl<'d> InputPin for Flex<'d> {
     fn is_high(&mut self) -> Result<bool, Self::Error> {
         Ok(self.0.is_high())
     }
@@ -52,7 +52,7 @@ impl<'d, P: esp32s3_hal::gpio::InputPin + esp32s3_hal::gpio::OutputPin> InputPin
     }
 }
 
-impl<'d, P: esp32s3_hal::gpio::InputPin + esp32s3_hal::gpio::OutputPin> OutputPin for Flex<'d, P> {
+impl<'d> OutputPin for Flex<'d> {
     fn set_high(&mut self) -> Result<(), Self::Error> {
         self.0.set_high();
         Ok(())
