@@ -1,0 +1,32 @@
+[target.xtensa-esp32s3-none-elf]
+runner = "espflash flash --monitor"
+
+[build]
+rustflags = [
+#     "-C", "force-frame-pointers",
+    # "-C", "link-arg=-nostartfiles",
+    # "-C", "link-arg=-Tdefmt.x",
+#       # Required to obtain backtraces (e.g. when using the "esp-backtrace" crate.)
+#   # NOTE: May negatively impact performance of produced code
+#   "-C", "force-frame-pointers",
+#     # "-C", "link-arg=-Wl,-Tlinkall.x",
+#     # "-C", "target-feature=-fp",
+#       "-C", "link-arg=-Tlinkall.x",
+  "-C", "link-arg=-Tlinkall.x",
+
+  "-C", "link-arg=-nostartfiles",
+  # Required to obtain backtraces (e.g. when using the "esp-backtrace" crate.)
+  # NOTE: May negatively impact performance of produced code
+  "-C", "force-frame-pointers",
+    
+#   # Need this, otherwise we get compiler error from esp-wifi
+#   "-C", "link-arg=-Trom_functions.x",
+]
+
+target = "xtensa-esp32s3-none-elf"
+
+[unstable]
+build-std = ["core"]
+
+[env]
+DEFMT_LOG = "info"

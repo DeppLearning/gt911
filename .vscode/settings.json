@@ -1,0 +1,21 @@
+{
+    // "rust-analyzer.cargo.extraArgs": ["+esp"],
+    "rust-analyzer.server.extraEnv": {
+        // "RUSTUP_TOOLCHAIN": "1.77.0",
+        "RUSTUP_TOOLCHAIN": "esp",
+        // "RUSTC": "/home/andrej/.rustup/toolchains/esp/bin/rustc"
+        // "LIBCLANG_PATH": "/home/andrej/.rustup/toolchains/esp/xtensa-esp32-elf-clang/esp-16.0.4-20231113/esp-clang/lib",
+        // "PATH":"/home/andrej/.rustup/toolchains/esp/xtensa-esp-elf/esp-13.2.0_20230928/xtensa-esp-elf/bin:$PATH"
+    },
+    // "rust-analyzer.check.targets": "xtensa-esp32-none-elf",
+    "rust-analyzer.check.overrideCommand": [
+        "cargo",
+        "clippy",
+        "--message-format=json",
+        // "--bins",
+        "--all-features",
+        "--target",
+        "xtensa-esp32-none-elf",
+    ],
+    // "rust-analyzer.cargo.target": "x86_64-unknown-linux-gnu",
+}
