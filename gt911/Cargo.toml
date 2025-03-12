@@ -1,0 +1,31 @@
+[package]
+edition = "2021"
+rust-version = "1.58"
+name = "gt911"
+version = "0.1.0"
+authors = ["Andrej Krakau <andrej.krakau@gmail.com>"]
+description = "An embedded-hal driver for the GT911 5-point capacitive touchscreen controller"
+readme = "README.md"
+categories = [
+    "embedded",
+    "embedded-hal",
+    "gt911",
+    "no-std",
+]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/depplearning/gt911"
+
+[dependencies.embedded-hal]
+version = "1.0.0"
+
+[dependencies]
+bitfield-struct = { version = "0.8.0", default-features = false }
+defmt = { version = "0.3.8", default-features = false, optional = true }
+heapless = { version = "0.8.0", default-features = false, optional = true }
+getset = { version = "0.1.2", default-features = false }
+zerocopy = { version = "0.7.34", default-features = false, features = ["byteorder", "derive"]}
+
+[features]
+default = ["heapless"]
+defmt = ["dep:defmt", "heapless?/defmt-03"]
+heapless = ["dep:heapless"]

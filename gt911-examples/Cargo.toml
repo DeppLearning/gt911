@@ -1,0 +1,50 @@
+[package]
+edition = "2021"
+rust-version = "1.58"
+name = "examples"
+version = "0.1.0"
+authors = ["Andrej Krakau <andrej.krakau@gmail.com>"]
+description = "Examples for the gt911 crate"
+readme = "README.md"
+categories = [
+    "embedded",
+    "embedded-hal",
+    "gt911",
+    "no-std",
+]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/depplearning/gt911"
+
+[dependencies.embedded-hal]
+version = "1.0.0"
+
+[dependencies]
+gt911 = { path = "../gt911", default-features = false, features = ["heapless"]}
+
+critical-section =  { version = "1.1.2", default-features = false }
+esp-hal = { version = "1.0.0-beta.0", default-features = false, features = ["esp32s3", "log", "debug", "unstable"] } # "embedded-hal",
+esp-backtrace = { version = "0.15.1", features = ["panic-handler",  "esp32s3", "println"], default-features = false }
+esp-println = { version = "0.13.1", features = ["esp32s3", "log", "uart"], default-features = false }
+heapless = { version = "0.8.0", default-features = false }
+
+# # cargo build/run --release
+# [profile.release]
+# codegen-units = 1
+# debug = 2
+# debug-assertions = false # <-
+# incremental = false
+# lto = 'fat'
+# # strip = true
+# opt-level = 3 # <-
+# overflow-checks = false # <-
+
+
+[profile.release]
+debug = true
+opt-level = "s"
+lto = "off"
+
+[profile.dev]
+debug = true
+opt-level = "s"
+lto = "off"
