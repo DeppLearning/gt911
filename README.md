@@ -22,7 +22,7 @@ The current state is pretty bare-bones. If you are missing a feature, please ope
   - [ ] read gestures
 - [ ] interrupt mode (might work already)
 - [ ] Alloc API
-- [ ] Async API
+- [X] Async API
 - [ ] rotation
 - [ ] more default configurations for popular development boards
   
