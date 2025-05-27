@@ -12,6 +12,7 @@ use esp_hal::i2c::master::I2c;
 use esp_hal::main;
 use esp_hal::time::Rate;
 use examples::Flex;
+use gt911::blocking::GT911;
 use gt911::Address;
 use heapless::Vec;
 
@@ -38,11 +39,15 @@ fn main() -> ! {
     .with_scl(scl);
     // let reg: u16 = 0x8040;
     // i2c.write(0x5d, &reg.to_be_bytes()).unwrap();
-    let mut touch = gt911::GT911::new(i2c, irq_pin, &mut rst, &mut delay, Address::One).unwrap();
+    let mut touch =
+        GT911::new(i2c, irq_pin, &mut rst, &mut delay, Address::One).unwrap();
 
     esp_println::println!("Initialized touch device");
 
-    esp_println::println!("product id: {}", core::str::from_utf8(touch.product_id().unwrap().to_le_bytes().as_slice()).unwrap());
+    esp_println::println!(
+        "product id: {}",
+        core::str::from_utf8(touch.product_id().unwrap().to_le_bytes().as_slice()).unwrap()
+    );
     esp_println::println!("firmware version: {}", touch.firmware_version().unwrap());
     let mut touches = Vec::<_, 5>::new();
 

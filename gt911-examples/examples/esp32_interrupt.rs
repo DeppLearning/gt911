@@ -33,7 +33,7 @@ use esp_hal::timer::timg::TimerGroup;
 use esp_hal::Blocking;
 use examples::Flex;
 use gt911::Address;
-use gt911::GT911;
+use gt911::blocking::GT911;
 use gt911::FlexPin;
 use heapless::Vec;
 
@@ -71,7 +71,7 @@ fn main() -> ! {
     .with_sda(sda)
     .with_scl(scl);
 
-    let mut touch = gt911::GT911::new(i2c, irq_pin, &mut rst, &mut delay, Address::One)
+    let mut touch = GT911::new(i2c, irq_pin, &mut rst, &mut delay, Address::One)
         .expect("Initialize the touch device");
 
     critical_section::with(|cs| {
