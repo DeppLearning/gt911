@@ -475,7 +475,7 @@ pub mod module_type {
         /// return a [ReadHandler] for reading the registered data.
         pub async fn read_handle(
             &mut self,
-        ) -> Result<ReadHandle<I2C, IRQ>, Error<<I2C as ErrorType>::Error>> {
+        ) -> Result<ReadHandle<'_, I2C, IRQ>, Error<<I2C as ErrorType>::Error>> {
             let buf = [0; 1];
             self.read_handle_into(buf).await
         }
@@ -487,7 +487,7 @@ pub mod module_type {
         pub async fn read_handle_into(
             &mut self,
             buf: [u8; 1],
-        ) -> Result<ReadHandle<I2C, IRQ>, Error<<I2C as ErrorType>::Error>> {
+        ) -> Result<ReadHandle<'_, I2C, IRQ>, Error<<I2C as ErrorType>::Error>> {
             let touch_status = self.read_touch_status_into(buf).await?;
 
             Ok(ReadHandle {

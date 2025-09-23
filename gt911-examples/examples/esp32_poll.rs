@@ -39,8 +39,7 @@ fn main() -> ! {
     .with_scl(scl);
     // let reg: u16 = 0x8040;
     // i2c.write(0x5d, &reg.to_be_bytes()).unwrap();
-    let mut touch =
-        GT911::new(i2c, irq_pin, &mut rst, &mut delay, Address::One).unwrap();
+    let mut touch = GT911::new(i2c, irq_pin, &mut rst, &mut delay, Address::One).unwrap();
 
     esp_println::println!("Initialized touch device");
 
