@@ -14,6 +14,7 @@ use esp_hal::gpio::Io;
 use esp_hal::gpio::Level;
 use esp_hal::gpio::Output;
 use esp_hal::gpio::Pull;
+use esp_hal::handler;
 use esp_hal::i2c::master::BusTimeout;
 use esp_hal::i2c::master::Config;
 use esp_hal::i2c::master::I2c;
@@ -21,29 +22,23 @@ use esp_hal::interrupt;
 use esp_hal::interrupt::InterruptHandler;
 use esp_hal::interrupt::Priority;
 use esp_hal::main;
-use esp_hal::ram;
-use esp_hal::handler;
 use esp_hal::peripheral::Peripheral;
 use esp_hal::peripherals::Interrupt;
 use esp_hal::peripherals::Peripherals;
 use esp_hal::peripherals::I2C0;
+use esp_hal::ram;
 use esp_hal::rtc_cntl::Rtc;
 use esp_hal::time::Rate;
 use esp_hal::timer::timg::TimerGroup;
 use esp_hal::Blocking;
 use examples::Flex;
-use gt911::Address;
 use gt911::blocking::GT911;
+use gt911::Address;
 use gt911::FlexPin;
 use heapless::Vec;
 
-static TOUCH: Mutex<
-    RefCell<
-        Option<
-            GT911<I2c<'static, Blocking>, Flex<'static>>,
-        >,
-    >,
-> = Mutex::new(RefCell::new(None));
+static TOUCH: Mutex<RefCell<Option<GT911<I2c<'static, Blocking>, Flex<'static>>>>> =
+    Mutex::new(RefCell::new(None));
 
 #[main]
 fn main() -> ! {

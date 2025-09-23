@@ -22,13 +22,13 @@ duplicate = { version = "2.0.0", default-features = false }
 maybe-async = { version = "0.2.10", default-features = false }
 embedded-hal = { version = "1.0.0", default-features = false }
 embedded-hal-async = { version = "1.0.0", default-features = false }
-heapless = { version = "0.8.0", default-features = false, optional = true }
+heapless = { version = "0.9.1", default-features = false, optional = true }
 getset = { version = "0.1.2", default-features = false }
 zerocopy = { version = "0.7.34", default-features = false, features = ["byteorder", "derive"] }
 
 [features]
 default = ["async", "heapless"]
 async = []
-defmt = ["dep:defmt", "heapless?/defmt-03"]
+defmt = ["dep:defmt", "heapless?/defmt"]
 heapless = ["dep:heapless"]
 sync = ["maybe-async/is_sync"]
